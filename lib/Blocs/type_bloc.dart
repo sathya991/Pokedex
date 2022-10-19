@@ -7,8 +7,12 @@ class TypeBloc extends Bloc<PokemonEvents, PokemonStates> {
     on<PokemonEvents>((event, emit) async {
       if (event is PokemonTypePageRequest) {
         if (event.type != 0) {
-          emit(MenuState(
-              title: event.name, type: event.type, clicked: event.clicked));
+          if (event.clicked == true) {
+            emit(MenuState(title: event.name, type: event.type, clicked: true));
+          } else {
+            emit(
+                MenuState(title: event.name, type: event.type, clicked: false));
+          }
         } else if (event.type == 0) {
           if (event.clicked == true) {
             emit(MenuState(title: "All", type: 0, clicked: true));

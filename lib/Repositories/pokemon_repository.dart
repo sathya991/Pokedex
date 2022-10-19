@@ -27,6 +27,7 @@ class PokemonRepository {
     };
     final uri = Uri.https(baseUrl, '/api/v2/type/$type', queryParameters);
     final response = await client.get(uri);
-    return typePokemonModelFromJson(response.body);
+    final json = jsonDecode(response.body);
+    return TypePokemonModel.fromJson(json);
   }
 }

@@ -83,6 +83,4 @@ var pokemonTypes = [
   "Dragon",
   "Dark",
   "Fairy",
-  "Unknown",
-  "Shadow"
 ];

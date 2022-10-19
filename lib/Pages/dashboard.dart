@@ -35,12 +35,13 @@ class DashBoard extends StatelessWidget {
                   return DropdownMenuItem(value: e, child: Text(e));
                 }).toList(),
                 onChanged: (a) {
-                  if (pokemonTypes.indexOf(a.toString()) != 0) {
+                  var curChoose = pokemonTypes.indexOf(a.toString());
+                  if (curChoose != 0) {
                     BlocProvider.of<TypeBloc>(context).add(
                         PokemonTypePageRequest(
                             page: 0,
                             clicked: true,
-                            type: pokemonTypes.indexOf(a.toString()),
+                            type: curChoose,
                             name: a.toString()));
                   } else {
                     BlocProvider.of<TypeBloc>(context).add(
@@ -53,6 +54,11 @@ class DashBoard extends StatelessWidget {
         body:
             BlocBuilder<PokemonBloc, PokemonStates>(builder: (context, state) {
           if (curType != 0 && clicked) {
+            BlocProvider.of<TypeBloc>(context).add(PokemonTypePageRequest(
+                page: 0,
+                clicked: false,
+                type: curType,
+                name: pokemonTypes[curType].toString()));
             BlocProvider.of<PokemonBloc>(context).add(PokemonTypePageRequest(
                 page: 0,
                 clicked: false,
@@ -78,7 +84,10 @@ class DashBoard extends StatelessWidget {
                     child: GridTile(
                         child: Column(
                       children: [
-                        Image.network(state.pokemonlist[index].imageUrl),
+                        Image.network(
+                          state.pokemonlist[index].imageUrl,
+                          height: 100,
+                        ),
                         Text(state.pokemonlist[index].name)
                       ],
                     )),

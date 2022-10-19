@@ -7,7 +7,7 @@ class InitialState extends PokemonStates {}
 class LoadingState extends PokemonStates {}
 
 class LoadedState extends PokemonStates {
-  final List pokemonlist;
+  final List<dynamic> pokemonlist;
   final String nextPage;
 
   LoadedState({required this.pokemonlist, required this.nextPage});

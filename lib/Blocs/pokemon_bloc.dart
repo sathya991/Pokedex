@@ -22,7 +22,7 @@ class PokemonBloc extends Bloc<PokemonEvents, PokemonStates> {
         try {
           final pageResponse = await _pokemonRepo.getPokemonByType(
               pokemonEvent.page, pokemonEvent.type);
-          emit(LoadedState(pokemonlist: pageResponse.pokemon, nextPage: ""));
+          emit(LoadedState(pokemonlist: pageResponse.pokemonT, nextPage: ""));
         } catch (e) {
           emit(FailureState(error: e.toString()));
         }
