@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedex/Blocs/pokemon_bloc.dart';
+import 'package:pokedex/Blocs/pokemon_event.dart';
+import 'package:pokedex/Blocs/type_bloc.dart';
+import 'package:pokedex/Models/all_pokemon_list_model.dart';
+import 'package:pokedex/Pages/dashboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,25 +17,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pokedex',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
-      home: const MyHomePage(title: 'Pokedex'),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) {
+            return PokemonBloc()..add(PokemonPageRequest(page: 0));
+          }),
+          BlocProvider(create: (context) {
+            return TypeBloc()
+              ..add(PokemonTypePageRequest(
+                clicked: false,
+                page: 0,
+                type: 0,
+                name: pokemonTypes[0],
+              ));
+          })
+        ],
+        child: const DashBoard(),
+      ),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
   }
 }
