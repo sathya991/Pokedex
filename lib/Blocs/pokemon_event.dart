@@ -17,3 +17,8 @@ class PokemonTypePageRequest extends PokemonEvents {
     required this.name,
   });
 }
+
+class PokemonViewRequest extends PokemonEvents {
+  final int id;
+  PokemonViewRequest({required this.id});
+}

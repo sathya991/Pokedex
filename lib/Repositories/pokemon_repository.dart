@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:pokedex/Models/all_pokemon_list_model.dart';
+import 'package:pokedex/Models/pokemon_model.dart';
 import 'package:pokedex/Models/type_pokemon_model.dart';
 
 class PokemonRepository {
@@ -14,7 +15,6 @@ class PokemonRepository {
       'offset': (pageIndex * 200).toString()
     };
     final uri = Uri.https(baseUrl, '/api/v2/pokemon', queryParameters);
-
     final response = await client.get(uri);
     final json = jsonDecode(response.body);
     return AllPokemonModel.fromJson(json);
@@ -29,5 +29,12 @@ class PokemonRepository {
     final response = await client.get(uri);
     final json = jsonDecode(response.body);
     return TypePokemonModel.fromJson(json);
+  }
+
+  Future<PokemonModel> getPokemonData(int id) async {
+    final uri = Uri.https(baseUrl, '/api/v2/pokemon/$id');
+    final response = await client.get(uri);
+    final json = jsonDecode(response.body);
+    return PokemonModel.fromJson(json);
   }
 }
